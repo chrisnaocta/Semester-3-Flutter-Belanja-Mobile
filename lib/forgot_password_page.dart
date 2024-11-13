@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 
-
 class ForgotPasswordPage extends StatefulWidget {
   @override
   _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
 }
 
-
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final TextEditingController _emailController = TextEditingController();
   String _message = '';
-
 
   Future<void> _resetPassword() async {
     // Implementasikan logika untuk mengirim email reset password
   }
 
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-
 
     return Scaffold(
       appBar: AppBar(title: Text('Lupa Password')),
@@ -34,7 +29,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               fit: BoxFit.cover, // Mengisi seluruh latar belakang
             ),
           ),
-
 
           // Konten di atas gambar
           Padding(
@@ -53,7 +47,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
                 SizedBox(height: 24),
 
-
                 // Pesan di bawah logo, margin sama dengan input email
                 Center(
                   child: SizedBox(
@@ -70,7 +63,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   ),
                 ),
                 SizedBox(height: 50),
-
 
                 // Pesan "Pesan:", margin sejajar dengan isian email
                 Center(
@@ -89,7 +81,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
                 SizedBox(height: 5),
 
-
                 // Deskripsi pesan dengan margin kiri kanan sejajar isian email
                 Center(
                   child: SizedBox(
@@ -106,7 +97,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   ),
                 ),
                 SizedBox(height: 24),
-
 
                 // TextField email dengan desain kapsul dan ikon email
                 Center(
@@ -130,7 +120,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
                 SizedBox(height: 24),
 
-
                 // Tombol Reset Password
                 Center(
                   child: SizedBox(
@@ -150,7 +139,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   ),
                 ),
                 SizedBox(height: 16),
-
 
                 // Pesan error atau status
                 Center(

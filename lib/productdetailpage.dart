@@ -3,14 +3,12 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart'; // Import package intl
 
-
 class ProductDetailPage extends StatelessWidget {
   final String productName;
   final String productPrice;
   final String productImage;
   final String productDescription;
   final String productId;
-
 
   ProductDetailPage({
     required this.productName,
@@ -19,7 +17,6 @@ class ProductDetailPage extends StatelessWidget {
     required this.productDescription,
     required this.productId,
   });
-
 
   // Fungsi untuk melakukan pembelian produk dan menyimpan ke database
   Future<void> _buyProduct(BuildContext context) async {
@@ -31,15 +28,13 @@ class ProductDetailPage extends StatelessWidget {
       ),
     );
 
-
     try {
       // Membersihkan format harga produk
       String cleanedPrice = productPrice.replaceAll(RegExp(r'[^0-9]'), '');
 
-
       // Mengirim POST request ke server untuk menyimpan data pembelian
       final response = await http.post(
-        Uri.parse('http://Ganti_Ya/flutter/penjualan.php'),
+        Uri.parse('http://localhost/latlogin_flutter/penjualan.php'),
         body: {
           'nama_produk': productName,
           'harga_produk':
@@ -49,11 +44,9 @@ class ProductDetailPage extends StatelessWidget {
         },
       );
 
-
       // Log respons untuk debugging
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
-
 
       // Cek apakah respons dari server berhasil
       if (response.statusCode == 200) {
@@ -96,7 +89,6 @@ class ProductDetailPage extends StatelessWidget {
     }
   }
 
-
   // Fungsi untuk memformat harga dengan NumberFormat yang sesuai
   String formatCurrency(String price) {
     final formatter = NumberFormat.currency(locale: 'id', symbol: 'Rp ');
@@ -105,12 +97,10 @@ class ProductDetailPage extends StatelessWidget {
         .format(int.parse(price.replaceAll(RegExp(r'[^0-9]'), '')) / 100);
   }
 
-
   @override
   Widget build(BuildContext context) {
     // Memformat harga produk menggunakan fungsi formatCurrency
     String formattedPrice = formatCurrency(productPrice);
-
 
     return Scaffold(
       appBar: AppBar(

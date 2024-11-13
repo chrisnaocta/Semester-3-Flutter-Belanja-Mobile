@@ -5,12 +5,10 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart'; // Untuk mengambil gambar
 import 'package:path_provider/path_provider.dart'; // Untuk mendapatkan path direktori
 
-
 class RegisterPage extends StatefulWidget {
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
-
 
 class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailController = TextEditingController();
@@ -21,9 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String _message = '';
   File? _imageFile; // Untuk menyimpan gambar yang dipilih
 
-
   final ImagePicker _picker = ImagePicker();
-
 
   // Fungsi untuk memilih gambar
   Future<void> _pickImage() async {
@@ -35,7 +31,6 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-
   // Fungsi untuk menyimpan gambar ke folder yang dapat diakses
   Future<void> _saveImage() async {
     if (_imageFile != null) {
@@ -44,14 +39,12 @@ class _RegisterPageState extends State<RegisterPage> {
           '${_namaController.text.split(" ")[0]}.jpg'; // Ambil nama depan
       final String newPath = '${directory.path}/$imageName'; // Path baru
 
-
       // Simpan gambar ke path baru
       await _imageFile!.copy(newPath);
       print(
           'Image saved to: $newPath'); // Debugging untuk memastikan penyimpanan
     }
   }
-
 
   Future<void> _register() async {
     final email = _emailController.text;
@@ -60,16 +53,12 @@ class _RegisterPageState extends State<RegisterPage> {
     final alamat = _alamatController.text;
     final telepon = _teleponController.text;
 
-
     await _saveImage(); // Simpan gambar sebelum registrasi
 
-
     var uri = Uri.parse(
-        "http://Ganti_Ya/flutter/register.php"); // Sesuaikan dengan URL API Anda
-
+        "http://localhost/latlogin_flutter/register.php"); // Sesuaikan dengan URL API Anda
 
     var request = http.MultipartRequest('POST', uri);
-
 
     // Menambahkan field ke request
     request.fields['email'] = email;
@@ -77,7 +66,6 @@ class _RegisterPageState extends State<RegisterPage> {
     request.fields['nama'] = nama;
     request.fields['alamat'] = alamat;
     request.fields['telepon'] = telepon;
-
 
     // Menambahkan gambar ke request
     if (_imageFile != null) {
@@ -87,14 +75,11 @@ class _RegisterPageState extends State<RegisterPage> {
           filename: imageName));
     }
 
-
     var response = await request.send();
-
 
     if (response.statusCode == 200) {
       var responseData = await http.Response.fromStream(response);
       var jsonData = jsonDecode(responseData.body);
-
 
       if (jsonData['success']) {
         setState(() {
@@ -111,7 +96,6 @@ class _RegisterPageState extends State<RegisterPage> {
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +175,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               SizedBox(height: 16),
 
-
               // Foto dalam bentuk lingkaran
               CircleAvatar(
                 radius: 50,
@@ -203,7 +186,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               SizedBox(height: 16),
 
-
               // Hanya menampilkan nama file
               if (_imageFile != null)
                 Text(
@@ -211,7 +193,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   style: TextStyle(fontSize: 14),
                 ),
               SizedBox(height: 16),
-
 
               // Tombol Upload Foto
               ElevatedButton(
@@ -224,7 +205,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Text('Upload Foto'),
               ),
               SizedBox(height: 16),
-
 
               // Tombol Register
               ElevatedButton(

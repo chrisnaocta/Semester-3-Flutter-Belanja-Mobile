@@ -5,27 +5,23 @@ import 'package:intl/intl.dart'; // Impor intl untuk memformat angka
 import 'login.dart'; // Impor halaman login
 import 'productdetailpage.dart'; // Impor halaman ProductDetailPage
 
-
 class DashboardPage extends StatefulWidget {
   @override
   _DashboardPageState createState() => _DashboardPageState();
 }
-
 
 class _DashboardPageState extends State<DashboardPage> {
   List products = [];
   bool isLoading = true; // Menyimpan status loading
   String errorMessage = ''; // Menyimpan pesan error jika ada
 
-
   // Fungsi untuk mengambil data produk dari API
   Future<void> fetchProducts() async {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://Ganti_Ya/flutter/get_products.php'), // Ganti dengan URL API Anda
+            'http://localhost/latlogin_flutter/get_products.php'), // Ganti dengan URL API Anda
       );
-
 
       if (response.statusCode == 200) {
         setState(() {
@@ -44,20 +40,17 @@ class _DashboardPageState extends State<DashboardPage> {
     }
   }
 
-
   @override
   void initState() {
     super.initState();
     fetchProducts(); // Panggil fungsi untuk mengambil data saat widget diinisialisasi
   }
 
-
   // Fungsi untuk memformat harga
   String formatCurrency(String price) {
     final formatter = NumberFormat.currency(locale: 'id', symbol: 'Rp ');
     return formatter.format(int.parse(price));
   }
-
 
   @override
   Widget build(BuildContext context) {

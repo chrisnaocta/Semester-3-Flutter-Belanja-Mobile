@@ -5,12 +5,10 @@ import 'dashboard_page.dart'; // Impor halaman dashboard
 import 'register_page.dart'; // Impor halaman register
 import 'forgot_password_page.dart'; // Impor halaman lupa password
 
-
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
-
 
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
@@ -18,15 +16,12 @@ class _LoginPageState extends State<LoginPage> {
   bool _obscureText = true; // Untuk menyembunyikan/menampilkan password
   String _message = '';
 
-
   Future<void> _login() async {
     final String email = _emailController.text;
     final String password = _passwordController.text;
 
-
     // URL endpoint API login
     final String url = 'http://localhost/latlogin_flutter/login.php';
-
 
     try {
       final response = await http.post(
@@ -36,7 +31,6 @@ class _LoginPageState extends State<LoginPage> {
           'password': password,
         },
       );
-
 
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body);
@@ -64,12 +58,10 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-
 
     return Scaffold(
       body: Stack(
@@ -87,7 +79,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
 
-
           // Konten halaman login di atas background
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -101,7 +92,6 @@ class _LoginPageState extends State<LoginPage> {
                     backgroundImage: AssetImage('assets/images/logo.png'),
                   ),
                   SizedBox(height: 24),
-
 
                   // TextField email dengan desain kapsul dan ikon email
                   SizedBox(
@@ -121,7 +111,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 16),
-
 
                   // TextField password dengan ikon mata untuk menampilkan/menyembunyikan password
                   SizedBox(
@@ -154,7 +143,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
 
-
                   // Link Lupa Password di bawah isian Password
                   Align(
                     alignment: Alignment.centerRight,
@@ -173,7 +161,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(height: 16),
-
 
                   // Tombol login dan register dalam satu row
                   Row(
@@ -198,7 +185,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 16),
 
-
                   // Pesan error
                   Text(
                     _message,
@@ -206,14 +192,12 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 100),
 
-
                   // Login dengan sosial media
                   Text(
                     "Atau login dengan",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 16),
-
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
