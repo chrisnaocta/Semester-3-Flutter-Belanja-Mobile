@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart'; // Untuk mengambil gambar
+import 'package:latlogin/login.dart';
 import 'package:path_provider/path_provider.dart'; // Untuk mendapatkan path direktori
 
 class RegisterPage extends StatefulWidget {

@@ -118,6 +118,13 @@ class _DashboardPageState extends State<DashboardPage> {
               leading: Icon(Icons.logout),
               title: Text('Logout'),
               onTap: () {
+                // Clear session or token data here if necessary
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          LoginPage()), // Adjust `LoginPage` to match your login page widget
+                );
                 // Tambahkan logika untuk logout
               },
             ),
