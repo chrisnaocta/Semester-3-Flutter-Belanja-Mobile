@@ -71,10 +71,16 @@ class _LoginPageState extends State<LoginPage> {
             width: screenWidth,
             height: screenHeight,
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                    'assets/images/Gambar_login2.png'), // Gambar background
-                fit: BoxFit.cover,
+              gradient: LinearGradient(
+                colors: [
+                  Colors.orange,
+                  Colors.red,
+                  Colors.pink,
+                  Colors.pink,
+                  Colors.red,
+              ],
+              stops: [0.25, 0.25, 0.25, 0.90, 0.90],
+              begin: Alignment.topLeft,
               ),
             ),
           ),
@@ -145,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   // Link Lupa Password di bawah isian Password
                   Align(
-                    alignment: Alignment.centerRight,
+                    alignment: Alignment.center,
                     child: TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -156,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       child: Text(
                         'Lupa Password?',
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255)),
                       ),
                     ),
                   ),
@@ -166,20 +172,27 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ElevatedButton(
-                        onPressed: _login,
-                        child: Text('Login'),
+                      Container(
+                        width: 110,
+                        child: 
+                        ElevatedButton(
+                          onPressed: _login,
+                          child: Text('Login'),
+                        ),
                       ),
                       SizedBox(width: 16),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RegisterPage()),
-                          );
-                        },
-                        child: Text('Register'),
+                      Container(
+                        width: 110,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterPage()),
+                            );
+                          },
+                          child: Text('Register'),
+                        ),
                       ),
                     ],
                   ),
@@ -195,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
                   // Login dengan sosial media
                   Text(
                     "Atau login dengan",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 16),
 
