@@ -104,17 +104,6 @@ class _DashboardPageState extends State<DashboardPage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.login),
-              title: Text('Halaman Login'),
-              onTap: () {
-                // Navigasi ke halaman login
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                );
-              },
-            ),
-            ListTile(
               leading: Icon(Icons.logout),
               title: Text('Logout'),
               onTap: () {
