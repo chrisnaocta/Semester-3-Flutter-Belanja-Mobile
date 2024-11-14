@@ -9,8 +9,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Login App',
-      home: LoginPage(), // Replace with your login widget name
+      title: 'Toko Online',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: LoginPage(), // Menetapkan LoginPage sebagai halaman utama
     );
   }
 }
