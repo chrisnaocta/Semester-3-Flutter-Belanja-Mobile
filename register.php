@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // Menggunakan prepared statement untuk menghindari SQL injection
         // Menambahkan field 'createdDate' dengan nilai default dari fungsi NOW() MySQL
         $stmt = $connect->prepare("INSERT INTO users (email, password, nama, alamat, telepon, createdDate) VALUES (?, ?, ?, ?, ?, NOW())");
-        $stmt->bind_param("sssss", $email, $password, $nama, $alamat, $telepon); // "s" = string
+        $stmt->bind_param("sssss", $email, $hashed_password, $nama, $alamat, $telepon); // "s" = string
 
         // Menjalankan query
         if ($stmt->execute()) {
