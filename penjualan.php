@@ -2,7 +2,7 @@
 // Mengatur header agar dapat diakses oleh berbagai sumber (CORS)
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");\
+header("Access-Control-Allow-Headers: Content-Type");
 
 // Menghubungkan ke database
 require "connect.php";
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         // Menggunakan prepared statement 
         $stmt = $connect->prepare("INSERT INTO jual (tgljual, idproduct, price, quantity) VALUES = (?, ?, ?, ?)");
-        $stmt->bindparam("ssdi", $tanggal, $id_produk, $harga_produk, $quantity); // 's' = string, 'd' = double
+        $stmt->bind_param("ssdi", $tanggal, $id_produk, $harga_produk, $quantity); // 's' = string, 'd' = double
 
         // Menjalankan query
         if ($stmt->execute()) {
