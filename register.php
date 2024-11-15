@@ -43,6 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // Jika ada field yang kosong
         $response['value'] = 0;
         $response['message'] = "Permintaan tidak valid";
-        echo json_encode($response);
     }
+
+     // Always return a JSON response
+     echo json_encode($response);
+     exit(); // Ensure the script stops executing after output
 }
