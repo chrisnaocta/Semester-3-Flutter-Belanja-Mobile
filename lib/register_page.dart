@@ -232,7 +232,10 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(height: 16),
               Text(
                 _message,
-                style: TextStyle(color: Colors.red),
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
