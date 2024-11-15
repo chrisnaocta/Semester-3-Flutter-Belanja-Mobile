@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart'; // Untuk mengambil gambar
-import 'package:latlogin/login.dart';
+import 'login.dart';
 import 'package:path_provider/path_provider.dart'; // Untuk mendapatkan path direktori
 
 class RegisterPage extends StatefulWidget {
@@ -76,24 +76,36 @@ class _RegisterPageState extends State<RegisterPage> {
           filename: imageName));
     }
 
-    var response = await request.send();
+    try {
+      // Adding timeout for the request to avoid indefinite freezing
+      var response = await request.send().timeout(Duration(seconds: 10));
 
-    if (response.statusCode == 200) {
-      var responseData = await http.Response.fromStream(response);
-      var jsonData = jsonDecode(responseData.body);
+      if (response.statusCode == 200) {
+        var responseData = await http.Response.fromStream(response);
+        var jsonData = jsonDecode(responseData.body);
 
-      if (jsonData['success']) {
-        setState(() {
-          _message = "Registration successful!";
-        });
+        if (jsonData['value'] == 1) {
+          if (mounted) {
+            // Ensure widget is still mounted before navigating
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LoginPage()),
+            );
+          }
+        } else {
+          setState(() {
+            _message = "Registration failed: ${jsonData['message']}";
+          });
+        }
       } else {
         setState(() {
-          _message = "Registration failed: ${jsonData['message']}";
+          _message =
+              "Error during registration (Status Code: ${response.statusCode})";
         });
       }
-    } else {
+    } catch (e) {
       setState(() {
-        _message = "Error during registration";
+        _message = "Request failed: $e";
       });
     }
   }
