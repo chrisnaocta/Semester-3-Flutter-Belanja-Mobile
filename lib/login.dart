@@ -163,7 +163,8 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       child: Text(
                         'Lupa Password?',
-                        style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255)),
+                        style: TextStyle(
+                            color: const Color.fromARGB(255, 255, 255, 255)),
                       ),
                     ),
                   ),
@@ -212,14 +213,20 @@ class _LoginPageState extends State<LoginPage> {
                   // Pesan error
                   Text(
                     _message,
-                    style: TextStyle(color: Colors.red),
+                    style: TextStyle(
+                      color: const Color.fromARGB(255, 0, 0, 0),
+                      fontWeight: FontWeight.bold, // Set text to bold
+                    ),
                   ),
                   SizedBox(height: 120),
 
                   // Login dengan sosial media
                   Text(
                     "Atau login dengan",
-                    style: TextStyle(color: Colors.white.withOpacity(0.95), fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 16),
 
