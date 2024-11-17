@@ -100,131 +100,172 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(title: Text('Register')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  prefixIcon: Icon(Icons.email),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-                ),
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  prefixIcon: Icon(Icons.lock),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-                ),
-                obscureText: true,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: _namaController,
-                decoration: InputDecoration(
-                  labelText: 'Nama',
-                  prefixIcon: Icon(Icons.person),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-                ),
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: _alamatController,
-                decoration: InputDecoration(
-                  labelText: 'Alamat',
-                  prefixIcon: Icon(Icons.home),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-                ),
-                minLines: 3,
-                maxLines: 3,
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: _teleponController,
-                decoration: InputDecoration(
-                  labelText: 'Telepon',
-                  prefixIcon: Icon(Icons.phone),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
-                ),
-              ),
-              SizedBox(height: 16),
-
-              // Foto dalam bentuk lingkaran
-              CircleAvatar(
-                radius: 50,
-                backgroundImage:
-                    _imageFile != null ? FileImage(_imageFile!) : null,
-                child: _imageFile == null
-                    ? Icon(Icons.person, size: 50)
-                    : null, // Tampilkan icon person jika belum ada foto
-              ),
-              SizedBox(height: 16),
-
-              // Hanya menampilkan nama file
-              if (_imageFile != null)
-                Text(
-                  'Nama file: ${_namaController.text.split(" ")[0]}.jpg',
-                  style: TextStyle(fontSize: 14),
-                ),
-              SizedBox(height: 16),
-
-              // Tombol Upload Foto
-              ElevatedButton(
-                onPressed: _pickImage,
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                ),
-                child: Text('Upload Foto'),
-              ),
-              SizedBox(height: 16),
-
-              // Tombol Register
-              ElevatedButton(
-                onPressed: _register,
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                ),
-                child: Text('Register'),
-              ),
-              SizedBox(height: 16),
-              Text(
-                _message,
-                style: TextStyle(color: Colors.red),
-              ),
-            ],
+      appBar: AppBar(
+        title: Text('Register'),
+        ),
+      body: Stack(
+        children: [
+        Container(
+          width: screenWidth,
+          height: screenHeight,
+          decoration: BoxDecoration(
           ),
         ),
+        
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: 
+          SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 500,
+                    child: TextField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        prefixIcon: Icon(Icons.email),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  SizedBox(
+                    width: 500,
+                    child: TextField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        prefixIcon: Icon(Icons.lock),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                      ),
+                      obscureText: true,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  SizedBox(
+                    width: 500,
+                    child: TextField(
+                      controller: _namaController,
+                      decoration: InputDecoration(
+                        labelText: 'Nama',
+                        prefixIcon: Icon(Icons.person),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  SizedBox(
+                    width: 500,
+                    child: TextField(
+                      controller: _alamatController,
+                      decoration: InputDecoration(
+                        labelText: 'Alamat',
+                        prefixIcon: Icon(Icons.home),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                      ),
+                      minLines: 3,
+                      maxLines: 3,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  SizedBox(
+                    width: 500,
+                    child: TextField(
+                      controller: _teleponController,
+                      decoration: InputDecoration(
+                        labelText: 'No. Telepon',
+                        prefixIcon: Icon(Icons.phone),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+              
+                  // Foto dalam bentuk lingkaran
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundImage:
+                        _imageFile != null ? FileImage(_imageFile!) : null,
+                    child: _imageFile == null
+                        ? Icon(Icons.person, size: 50)
+                        : null, // Tampilkan icon person jika belum ada foto
+                  ),
+                  SizedBox(height: 10),
+              
+                  // Hanya menampilkan nama file
+                  if (_imageFile != null)
+                    Text(
+                      'Nama file: ${_namaController.text.split(" ")[0]}.jpg',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  SizedBox(height: 5),
+              
+                  // Tombol Upload Foto
+                  ElevatedButton(
+                    onPressed: _pickImage,
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                    child: Text('Upload Foto (Opsional)'),
+                  ),
+                  SizedBox(height: 36),
+              
+                  // Tombol Register
+                  SizedBox(
+                    height: 40,
+                    width: 200,
+                    child: ElevatedButton(
+                      onPressed: _register,
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                        textStyle: TextStyle(fontSize: 15),
+                        elevation: 3,
+                      ),
+                      child: Text('Register'),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    _message,
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        ]
       ),
     );
   }
