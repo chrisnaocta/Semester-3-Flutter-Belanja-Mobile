@@ -11,7 +11,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Toko Online',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        useMaterial3: true,
+
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 220, 0, 103)),
       ),
       home:
           LoginPage(), // Menetapkan Login page sebagai halaman utama (Halaman yang akan pertama dibuka jika program dijalankan)

@@ -73,14 +73,15 @@ class _LoginPageState extends State<LoginPage> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.orange,
+                  const Color.fromARGB(255, 255, 184, 77),
                   Colors.red,
+                  const Color.fromARGB(255, 236, 73, 127),
                   Colors.pink,
-                  Colors.pink,
-                  Colors.red,
-                ],
-                stops: [0.25, 0.25, 0.25, 0.90, 0.90],
-                begin: Alignment.topLeft,
+                  const Color.fromARGB(255, 252, 91, 80),
+              ],
+              stops: [0.15, 0.15, 0.15, 0.90, 0.90],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
               ),
             ),
           ),
@@ -148,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-
+                  SizedBox(height: 3,),
                   // Link Lupa Password di bawah isian Password
                   Align(
                     alignment: Alignment.center,
@@ -175,7 +176,13 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Container(
                         width: 110,
-                        child: ElevatedButton(
+                        height: 35,
+                        child: 
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white.withOpacity(0.9),
+                            foregroundColor: Colors.black,
+                          ),
                           onPressed: _login,
                           child: Text('Login'),
                         ),
@@ -183,7 +190,12 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(width: 16),
                       Container(
                         width: 110,
+                        height: 35,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white.withOpacity(0.9),
+                            foregroundColor: Colors.black,
+                          ),
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -206,7 +218,7 @@ class _LoginPageState extends State<LoginPage> {
                       fontWeight: FontWeight.bold, // Set text to bold
                     ),
                   ),
-                  SizedBox(height: 100),
+                  SizedBox(height: 120),
 
                   // Login dengan sosial media
                   Text(
