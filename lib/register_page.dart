@@ -36,7 +36,8 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  // Fungsi untuk melakukan registrasFuture<void> _register() async {
+  // Fungsi untuk melakukan registras
+  Future<void> _register() async {
     showDialog(
       context: context,
       barrierDismissible: false,
