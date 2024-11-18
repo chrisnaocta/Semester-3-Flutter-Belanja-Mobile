@@ -22,10 +22,29 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // Hashing password sebelum menyimpan
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
+         // Handling file upload
+         $fotoFileName = null;
+         if (isset($_FILES['foto'])) {
+             $uploadDir = 'uploads/';
+
+            // Mengamankan nama file
+            $safeName = strtolower(preg_replace('/[^a-zA-Z0-9_-]/', '', $nama)); // Hapus karakter tidak valid
+            $fotoFileName = $safeName . '.png'; // Format nama file <nama_user>.png
+            $uploadPath = $uploadDir . $fotoFileName;
+ 
+             // Pindahkan file ke folder uploads
+             if (!move_uploaded_file($_FILES['foto']['tmp_name'], $uploadPath)) {
+                 $response['value'] = 0;
+                 $response['message'] = 'Gagal mengunggah file foto';
+                 echo json_encode($response);
+                 exit(); // Hentikan eksekusi jika gagal upload
+             }
+         }
+
         // Menggunakan prepared statement untuk menghindari SQL injection
         // Menambahkan field 'createdDate' dengan nilai default dari fungsi NOW() MySQL
-        $stmt = $connect->prepare("INSERT INTO users (email, password, nama, alamat, telepon, createdDate) VALUES (?, ?, ?, ?, ?, NOW())");
-        $stmt->bind_param("sssss", $email, $hashed_password, $nama, $alamat, $telepon); // "s" = string
+        $stmt = $connect->prepare("INSERT INTO users (email, password, nama, alamat, telepon, foto, createdDate) VALUES (?, ?, ?, ?, ?, ?, NOW())");
+        $stmt->bind_param("ssssss", $email, $hashed_password, $nama, $alamat, $telepon, $fotoFileName); // "s" = string
 
         // Menjalankan query
         if ($stmt->execute()) {
