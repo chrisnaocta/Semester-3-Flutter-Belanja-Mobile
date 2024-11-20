@@ -73,11 +73,11 @@ class _LoginPageState extends State<LoginPage> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  const Color.fromARGB(255, 255, 184, 77),
-                  Colors.red,
-                  const Color.fromARGB(255, 236, 73, 127),
-                  Colors.pink,
-                  const Color.fromARGB(255, 252, 91, 80),
+                  const Color.fromARGB(255, 255, 183, 22),
+                  Colors.white,
+                  Colors.white,
+                  Colors.white,
+                  const Color.fromARGB(255, 255, 57, 45),
               ],
               stops: [0.15, 0.15, 0.15, 0.90, 0.90],
               begin: Alignment.topLeft,
@@ -93,12 +93,14 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    height: 28,
+                  ),
                   // Logo berbentuk lingkaran
                   CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage('assets/images/logo.png'),
+                    radius: 100,
+                    backgroundImage: AssetImage('assets/images/QuickShop.png'),
                   ),
-                  SizedBox(height: 24),
 
                   // TextField email dengan desain kapsul dan ikon email
                   SizedBox(
@@ -111,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                        contentPadding: EdgeInsets.all(4),
                         filled: true,
                         fillColor: Colors.white.withOpacity(0.8),
                       ),
@@ -164,11 +166,11 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         'Lupa Password?',
                         style: TextStyle(
-                            color: const Color.fromARGB(255, 255, 255, 255)),
+                            color: const Color.fromARGB(230, 0,0,0)),
                       ),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 24),
 
                   // Tombol login dan register dalam satu row
                   Row(
@@ -180,11 +182,18 @@ class _LoginPageState extends State<LoginPage> {
                         child: 
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white.withOpacity(0.9),
-                            foregroundColor: Colors.black,
+                            backgroundColor: Color.fromARGB(255, 250, 100, 18),
+                            foregroundColor: Colors.white,
+                            elevation: 2,
                           ),
                           onPressed: _login,
-                          child: Text('Login'),
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(width: 16),
@@ -193,8 +202,9 @@ class _LoginPageState extends State<LoginPage> {
                         height: 35,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white.withOpacity(0.9),
-                            foregroundColor: Colors.black,
+                            backgroundColor: const Color.fromARGB(255, 252, 252, 252),
+                            foregroundColor: Color.fromARGB(255, 250, 100, 18),
+                            
                           ),
                           onPressed: () {
                             Navigator.push(
@@ -203,7 +213,13 @@ class _LoginPageState extends State<LoginPage> {
                                   builder: (context) => RegisterPage()),
                             );
                           },
-                          child: Text('Register'),
+                          child: Text(
+                            'Register',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -218,15 +234,15 @@ class _LoginPageState extends State<LoginPage> {
                       fontWeight: FontWeight.bold, // Set text to bold
                     ),
                   ),
-                  SizedBox(height: 120),
+                  SizedBox(height: 40),
 
                   // Login dengan sosial media
                   Text(
                     "Atau login dengan",
                     style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 16,
-                        fontWeight: FontWeight.w600),
+                        fontWeight: FontWeight.w300),
                   ),
                   SizedBox(height: 16),
 
@@ -235,16 +251,22 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       GestureDetector(
                         onTap: () {},
-                        child: CircleAvatar(
-                          radius: 25,
-                          backgroundImage:
-                              AssetImage('assets/images/google_logo.png'),
+                        child: 
+                        CircleAvatar(
+                          radius: 26,
+                          backgroundColor: Color.fromARGB(99, 0, 0, 0),
+                          child: CircleAvatar(
+                            radius: 25,
+                            backgroundImage:
+                                AssetImage('assets/images/google_logo.png'),
+                          ),
                         ),
                       ),
                       SizedBox(width: 20),
                       GestureDetector(
                         onTap: () {},
-                        child: CircleAvatar(
+                        child: 
+                        CircleAvatar(
                           radius: 25,
                           backgroundImage:
                               AssetImage('assets/images/facebook_logo.png'),
@@ -253,19 +275,16 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(width: 20),
                       GestureDetector(
                         onTap: () {},
-                        child: CircleAvatar(
-                          radius: 25,
-                          backgroundImage:
-                              AssetImage('assets/images/linkedin_logo.png'),
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      GestureDetector(
-                        onTap: () {},
-                        child: CircleAvatar(
-                          radius: 25,
-                          backgroundImage:
-                              AssetImage('assets/images/twitter_logo.png'),
+                        child: 
+                        CircleAvatar(
+                          radius: 26,
+                          backgroundColor: const Color.fromARGB(99, 0, 0, 0),
+                          child: CircleAvatar(
+                            radius: 25,
+                            
+                            backgroundImage:
+                                AssetImage('assets/images/twitter_logo.png'),
+                          ),
                         ),
                       ),
                     ],
