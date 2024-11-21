@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart'; // Untuk mengambil gambar
 import 'login.dart';
-import 'package:path_provider/path_provider.dart'; // Untuk mendapatkan path direktori
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -24,7 +23,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
   // Fungsi untuk memilih gambar
   Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 800, // Batas lebar maksimum gambar
+      maxHeight: 800, // Batas tinggi maksimum gambar
+      imageQuality: 80, // Kualitas gambar (0-100)
+    );
     if (pickedFile != null) {
       setState(() {
         _imageFile = File(pickedFile.path);
@@ -32,61 +36,52 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  // Fungsi untuk menyimpan gambar ke folder yang dapat diakses
-  Future<void> _saveImage() async {
-    if (_imageFile != null) {
-      final directory = await getApplicationDocumentsDirectory();
-      final String imageName =
-          '${_namaController.text.split(" ")[0]}.jpg'; // Ambil nama depan
-      final String newPath = '${directory.path}/$imageName'; // Path baru
-
-      // Simpan gambar ke path baru
-      await _imageFile!.copy(newPath);
-      print(
-          'Image saved to: $newPath'); // Debugging untuk memastikan penyimpanan
-    }
-  }
-
+  // Fungsi untuk melakukan registras
   Future<void> _register() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
     final email = _emailController.text;
     final password = _passwordController.text;
     final nama = _namaController.text;
     final alamat = _alamatController.text;
     final telepon = _teleponController.text;
 
-    await _saveImage(); // Simpan gambar sebelum registrasi
-
-    var uri = Uri.parse(
-        "http://localhost/latlogin_flutter/register.php"); // Sesuaikan dengan URL API Anda
-
-    var request = http.MultipartRequest('POST', uri);
-
-    // Menambahkan field ke request
-    request.fields['email'] = email;
-    request.fields['password'] = password;
-    request.fields['nama'] = nama;
-    request.fields['alamat'] = alamat;
-    request.fields['telepon'] = telepon;
-
-    // Menambahkan gambar ke request
-    if (_imageFile != null) {
-      String imageName = '${_namaController.text.split(" ")[0]}.jpg';
-      request.files.add(await http.MultipartFile.fromPath(
-          'foto', _imageFile!.path,
-          filename: imageName));
-    }
-
     try {
-      // Adding timeout for the request to avoid indefinite freezing
-      var response = await request.send().timeout(Duration(seconds: 10));
+      var uri = Uri.parse("http://localhost/latlogin_flutter/register.php");
 
+      var request = http.MultipartRequest('POST', uri);
+
+      // Menambahkan field ke request
+      request.fields['email'] = email;
+      request.fields['password'] = password;
+      request.fields['nama'] = nama;
+      request.fields['alamat'] = alamat;
+      request.fields['telepon'] = telepon;
+
+      // Add image file
+      if (_imageFile != null) {
+        final imageBytes = await _imageFile!.readAsBytes();
+        request.files.add(http.MultipartFile.fromBytes(
+          'foto',
+          imageBytes,
+          filename: '${_namaController.text.split(" ")[0]}.jpg',
+        ));
+      }
+
+      // Send the request
+      var response = await request.send();
       if (response.statusCode == 200) {
         var responseData = await http.Response.fromStream(response);
         var jsonData = jsonDecode(responseData.body);
 
         if (jsonData['value'] == 1) {
           if (mounted) {
-            // Ensure widget is still mounted before navigating
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => LoginPage()),
@@ -104,6 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
         });
       }
     } catch (e) {
+      Navigator.pop(context); // Hilangkan indikator loading jika terjadi error
       setState(() {
         _message = "Request failed: $e";
       });
