@@ -117,9 +117,27 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Register'),
+        backgroundColor: const Color.fromARGB(255, 14, 14, 14),
+        foregroundColor: const Color.fromARGB(255, 255, 255, 255),
         ),
       body: Stack(
         children: [
+          // Gambar latar belakang
+          Container(
+            width: screenWidth,
+            height: screenHeight,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.white,
+              ],
+              stops: [1],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              ),
+            ),
+          ),
+
         Container(
           width: screenWidth,
           height: screenHeight,
@@ -216,11 +234,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 18),
               
                   // Foto dalam bentuk lingkaran
                   CircleAvatar(
                     radius: 50,
+                    backgroundColor: Color.fromARGB(255, 220, 220, 220),
                     backgroundImage:
                         _imageFile != null ? FileImage(_imageFile!) : null,
                     child: _imageFile == null
@@ -241,30 +260,42 @@ class _RegisterPageState extends State<RegisterPage> {
                   ElevatedButton(
                     onPressed: _pickImage,
                     style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
+                      backgroundColor: const Color.fromARGB(255, 252, 252, 252),
+                      foregroundColor: Color.fromARGB(255, 14, 14, 14),
+                      elevation: 3,
                     ),
-                    child: Text('Upload Foto (Opsional)'),
+                    child: Text(
+                        'Upload Foto (Opsional)',
+                        style: TextStyle(
+                          fontSize: 14,
+                          letterSpacing: 0.5,
+                        ),
+                        ),
                   ),
                   SizedBox(height: 36),
               
                   // Tombol Register
                   SizedBox(
-                    height: 40,
-                    width: 200,
+                    height: 35,
+                    width: 120,
                     child: ElevatedButton(
                       onPressed: _register,
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                        textStyle: TextStyle(fontSize: 15),
+                        backgroundColor: Color.fromARGB(255, 14, 14, 14),
+                        foregroundColor: Colors.white,
                         elevation: 3,
+                        textStyle: TextStyle(fontSize: 15),
                       ),
-                      child: Text('Register'),
+                      child: Text(
+                        'Register',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 0.5,
+                        ),
+                        ),
                     ),
                   ),
                   SizedBox(height: 16),

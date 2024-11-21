@@ -73,11 +73,15 @@ class _LoginPageState extends State<LoginPage> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
+                  // Warna logo:
+                  // Yellow (255, 255, 158, 1)
+                  // Orange (255, 255, 115, 18)
+                  // Red (255, 255, 68, 18)
                   const Color.fromARGB(255, 255, 183, 22),
                   Colors.white,
                   Colors.white,
                   Colors.white,
-                  const Color.fromARGB(255, 255, 57, 45),
+                  const Color.fromARGB(255, 255, 72, 40),
               ],
               stops: [0.15, 0.15, 0.15, 0.90, 0.90],
               begin: Alignment.topLeft,
@@ -177,14 +181,41 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: 110,
+                        width: 120,
                         height: 35,
                         child: 
-                        ElevatedButton(
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color.fromARGB(255, 252, 252, 252),
+                              foregroundColor: Color.fromARGB(255, 14, 14, 14),
+                              elevation: 3,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RegisterPage()),
+                              );
+                            },
+                            child: Text(
+                              'Register',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                          ),
+                      ),
+                      SizedBox(width: 16),
+                      Container(
+                        width: 120,
+                        height: 35,
+                        child:
+                          ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 250, 100, 18),
+                            backgroundColor: Color.fromARGB(255, 14, 14, 14),
                             foregroundColor: Colors.white,
-                            elevation: 2,
+                            elevation: 3,
                           ),
                           onPressed: _login,
                           child: Text(
@@ -195,32 +226,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(width: 16),
-                      Container(
-                        width: 110,
-                        height: 35,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(255, 252, 252, 252),
-                            foregroundColor: Color.fromARGB(255, 250, 100, 18),
-                            
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterPage()),
-                            );
-                          },
-                          child: Text(
-                            'Register',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 0.5,
-                            ),
-                          ),
-                        ),
+                         
                       ),
                     ],
                   ),
