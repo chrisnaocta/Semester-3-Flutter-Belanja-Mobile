@@ -22,32 +22,56 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // Hashing password sebelum menyimpan
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-         // Handling file upload
-         $fotoFileName = null;
-         if (isset($_FILES['foto'])) {
-             $uploadDir = 'uploads/';
-
-            // Mengamankan nama file
-            $safeName = strtolower(preg_replace('/[^a-zA-Z0-9_-]/', '', $nama)); // Hapus karakter tidak valid
-            $fotoFileName = $safeName . '.png'; // Format nama file <nama_user>.png
-            $uploadPath = $uploadDir . $fotoFileName;
- 
-             // Pindahkan file ke folder uploads
-             if (!move_uploaded_file($_FILES['foto']['tmp_name'], $uploadPath)) {
-                 $response['value'] = 0;
-                 $response['message'] = 'Gagal mengunggah file foto';
-                 echo json_encode($response);
-                 exit(); // Hentikan eksekusi jika gagal upload
-             }
-         }
-
         // Menggunakan prepared statement untuk menghindari SQL injection
         // Menambahkan field 'createdDate' dengan nilai default dari fungsi NOW() MySQL
         $stmt = $connect->prepare("INSERT INTO users (email, password, nama, alamat, telepon, foto, createdDate) VALUES (?, ?, ?, ?, ?, ?, NOW())");
         $stmt->bind_param("ssssss", $email, $hashed_password, $nama, $alamat, $telepon, $fotoFileName); // "s" = string
 
-        // Menjalankan query
+         // Menjalankan query
         if ($stmt->execute()) {
+            // Jika penyimpanan berhasil, ambil ID yang baru saja dimasukkan
+            $userId = $stmt->insert_id; // Ambil ID auto increment dari pengguna yang baru ditambahkan
+
+            // Handling file upload
+            $uploadDir = 'uploads/';
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+            // Mengamankan nama file
+            $fotoFileName = null;
+            if (isset($_FILES['foto'])) {
+                $profileFoto = $_FILES['foto'];
+                $fileName = $profileFoto['name'];
+                $fileTmp = $profileFoto['tmp_name'];
+                $fileSize = $profileFoto['size'];
+                $fileType = mime_content_type($fileTmp);
+
+                // Check if the file is an image and within size limits (2MB in this example)
+                if (in_array($fileType, $allowedTypes) && $fileSize <= 2 * 1024 * 1024) {
+                    // Create the destination path for the file (save with userId as the filename)
+                    $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION); // Get the file extension (jpg, png, jpeg)
+                    $fotoFileName = $userId . '.' . $fileExtension; // Format nama file <id_user>.<ext>
+                    $uploadPath = $uploadDir . $fotoFileName;
+
+                    // Pindahkan file ke folder uploads
+                    if (move_uploaded_file($fileTmp, $uploadPath)) {
+                        // Update database dengan nama file foto
+                        $stmt = $connect->prepare("UPDATE users SET foto = ? WHERE id = ?");
+                        $stmt->bind_param("si", $fotoFileName, $userId);
+                        $stmt->execute();
+                    } else {
+                        $response['value'] = 0;
+                        $response['message'] = 'Gagal mengunggah file foto';
+                        echo json_encode($response);
+                        exit(); // Hentikan eksekusi jika gagal upload
+                    }
+                } else {
+                    $response['value'] = 0;
+                    $response['message'] = 'File yang diupload harus berupa gambar JPG/PNG/JPEG dan maksimal 2MB.';
+                    echo json_encode($response);
+                    exit();
+                }
+            }
+
             // Jika penyimpanan berhasil
             $response['value'] = 1;
             $response['message'] = 'Registrasi berhasil diproses';

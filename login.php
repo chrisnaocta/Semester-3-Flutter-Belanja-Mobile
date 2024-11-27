@@ -1,9 +1,11 @@
 <?php
+session_start();
 
 //Mengatur header agar dapat diakses oleh berbagai sumber (CORS)
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Credentials: true");
 
 //Menghubungkan ke database
 require "connect.php";
@@ -31,6 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"){
             //Jika password cocok login berhasil
             $response['value'] = 1;
             $response['message'] = "Login Berhasil";
+
+            // Store user ID in session
+            $_SESSION['user_id'] = $row['id']; // Assuming 'id' is the primary key for users
         }else{
             //Jika password tidak cocok
             $response['value'] = 0;
