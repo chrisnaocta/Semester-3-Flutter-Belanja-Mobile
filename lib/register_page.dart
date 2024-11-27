@@ -53,7 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final telepon = _teleponController.text;
 
     try {
-      var uri = Uri.parse("http://localhost/latlogin_flutter/register.php");
+      var uri = Uri.parse("http://10.0.2.2/latlogin_flutter/register.php");
 
       var request = http.MultipartRequest('POST', uri);
 
@@ -66,11 +66,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
       // Add image file
       if (_imageFile != null) {
-        final imageBytes = await _imageFile!.readAsBytes();
-        request.files.add(http.MultipartFile.fromBytes(
+        request.files.add(await http.MultipartFile.fromPath(
           'foto',
-          imageBytes,
-          filename: '${_namaController.text.split(" ")[0]}.jpg',
+          _imageFile!.path,
         ));
       }
 
@@ -113,20 +111,16 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Register'),
-        ),
-      body: Stack(
-        children: [
+      ),
+      body: Stack(children: [
         Container(
           width: screenWidth,
           height: screenHeight,
-          decoration: BoxDecoration(
-          ),
+          decoration: BoxDecoration(),
         ),
-        
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: 
-          SingleChildScrollView(
+          child: SingleChildScrollView(
             child: Center(
               child: Column(
                 children: [
@@ -140,8 +134,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 16.0),
                       ),
                     ),
                   ),
@@ -156,8 +150,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 16.0),
                       ),
                       obscureText: true,
                     ),
@@ -173,8 +167,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 16.0),
                       ),
                     ),
                   ),
@@ -189,8 +183,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 16.0),
                       ),
                       minLines: 3,
                       maxLines: 3,
@@ -207,13 +201,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 16.0),
                       ),
                     ),
                   ),
                   SizedBox(height: 16),
-              
+
                   // Foto dalam bentuk lingkaran
                   CircleAvatar(
                     radius: 50,
@@ -224,7 +218,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         : null, // Tampilkan icon person jika belum ada foto
                   ),
                   SizedBox(height: 10),
-              
+
                   // Hanya menampilkan nama file
                   if (_imageFile != null)
                     Text(
@@ -232,7 +226,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       style: TextStyle(fontSize: 14),
                     ),
                   SizedBox(height: 5),
-              
+
                   // Tombol Upload Foto
                   ElevatedButton(
                     onPressed: _pickImage,
@@ -244,7 +238,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Text('Upload Foto (Opsional)'),
                   ),
                   SizedBox(height: 36),
-              
+
                   // Tombol Register
                   SizedBox(
                     height: 40,
@@ -256,7 +250,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                         backgroundColor: Theme.of(context).colorScheme.primary,
-                        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onPrimary,
                         textStyle: TextStyle(fontSize: 15),
                         elevation: 3,
                       ),
@@ -273,8 +268,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
         ),
-        ]
-      ),
+      ]),
     );
   }
 }

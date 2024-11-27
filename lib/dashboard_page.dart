@@ -14,13 +14,15 @@ class _DashboardPageState extends State<DashboardPage> {
   List products = [];
   bool isLoading = true; // Menyimpan status loading
   String errorMessage = ''; // Menyimpan pesan error jika ada
+  String userName = 'Loading...';
+  String userEmail = 'Loading...';
 
   // Fungsi untuk mengambil data produk dari API
   Future<void> fetchProducts() async {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://localhost/latlogin_flutter/get_products.php'), // Ganti dengan URL API Anda
+            'http://10.0.2.2/latlogin_flutter/get_products.php'), // Ganti dengan URL API Anda
       );
 
       if (response.statusCode == 200) {
@@ -44,6 +46,44 @@ class _DashboardPageState extends State<DashboardPage> {
   void initState() {
     super.initState();
     fetchProducts(); // Panggil fungsi untuk mengambil data saat widget diinisialisasi
+    fetchUserProfile(); // Panggil fungsi untuk mengambil profil pengguna
+  }
+
+  // Fungsi untuk mengambil profil pengguna
+  Future<void> fetchUserProfile() async {
+    try {
+      final response = await http.get(
+        Uri.parse('http://10.0.2.2/latlogin_flutter/get_users.php'),
+        // Pastikan untuk mengirim cookie atau session jika diperlukan
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+
+        if (responseData['status'] == 'success') {
+          setState(() {
+            userName = responseData['data']['nama'] ?? 'Nama Tidak Tersedia';
+            userEmail = responseData['data']['email'] ?? 'Email Tidak Tersedia';
+            isLoading = false;
+          });
+        } else {
+          // Tangani kesalahan
+          setState(() {
+            userName = 'Error';
+            userEmail = responseData['message'] ?? 'Gagal memuat profil';
+            isLoading = false;
+          });
+        }
+      } else {
+        throw Exception('Gagal memuat profil pengguna');
+      }
+    } catch (e) {
+      setState(() {
+        userName = 'Error';
+        userEmail = e.toString();
+        isLoading = false;
+      });
+    }
   }
 
   // Fungsi untuk memformat harga
@@ -74,8 +114,8 @@ class _DashboardPageState extends State<DashboardPage> {
         child: Column(
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text('Nama Pengguna'), // Nama pengguna
-              accountEmail: Text('email@domain.com'), // Email pengguna
+              accountName: Text(userName), // Nama pengguna
+              accountEmail: Text(userEmail), // Email pengguna
               currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage(
                   'https://via.placeholder.com/150', // Ganti dengan URL foto pengguna
