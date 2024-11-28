@@ -53,9 +53,24 @@ class _DashboardPageState extends State<DashboardPage> {
   // Fungsi untuk mengambil profil pengguna
   Future<void> fetchUserProfile() async {
     try {
-      final response = await http.get(
+      final SharedPreferences session = await SharedPreferences.getInstance();
+      String? email = session.getString('email'); // Ambil email dari session
+
+      if (email == null) {
+        setState(() {
+          userName = 'Email tidak tersedia';
+          userEmail = 'Email tidak tersedia';
+          isLoading = false;
+        });
+        return; // Keluar dari fungsi jika email tidak ada
+      }
+      final response = await http.post(
         Uri.parse('http://10.0.2.2/latlogin_flutter/get_users.php'),
-        // Pastikan untuk mengirim cookie atau session jika diperlukan
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $email',
+        },
+        body: json.encode({'email': email}), // Mengirim email dalam body
       );
 
       if (response.statusCode == 200) {

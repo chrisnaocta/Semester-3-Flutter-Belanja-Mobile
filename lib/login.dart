@@ -64,8 +64,10 @@ class _LoginPageState extends State<LoginPage> {
           await session.setBool('isLogin', true);
           await session.setString('email', email);
           await session.setString('password', password);
-          print(session.getString('email'));
-          print(session.getBool('isLogin'));
+          print(session.getString(
+              'email')); //debug apakah session email tersimpan (string)
+          print(session.getBool(
+              'isLogin')); //debug apakah session isLogin tersimpan (boolean)
           // Jika login berhasil
           Navigator.pushReplacement(
             context,
