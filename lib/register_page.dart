@@ -66,11 +66,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
       // Add image file
       if (_imageFile != null) {
-        final imageBytes = await _imageFile!.readAsBytes();
-        request.files.add(http.MultipartFile.fromBytes(
+        request.files.add(await http.MultipartFile.fromPath(
           'foto',
-          imageBytes,
-          filename: '${_namaController.text.split(" ")[0]}.jpg',
+          _imageFile!.path,
         ));
       }
 
@@ -137,14 +135,11 @@ class _RegisterPageState extends State<RegisterPage> {
         Container(
           width: screenWidth,
           height: screenHeight,
-          decoration: BoxDecoration(
-          ),
+          decoration: BoxDecoration(),
         ),
-        
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: 
-          SingleChildScrollView(
+          child: SingleChildScrollView(
             child: Center(
               child: Column(
                 children: [
@@ -158,8 +153,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 16.0),
                       ),
                     ),
                   ),
@@ -174,8 +169,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 16.0),
                       ),
                       obscureText: true,
                     ),
@@ -191,8 +186,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 16.0),
                       ),
                     ),
                   ),
@@ -207,8 +202,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 16.0),
                       ),
                       minLines: 3,
                       maxLines: 3,
@@ -225,8 +220,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 16.0),
                       ),
                     ),
                   ),
@@ -243,7 +238,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         : null, // Tampilkan icon person jika belum ada foto
                   ),
                   SizedBox(height: 10),
-              
+
                   // Hanya menampilkan nama file
                   if (_imageFile != null)
                     Text(
@@ -251,7 +246,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       style: TextStyle(fontSize: 14),
                     ),
                   SizedBox(height: 5),
-              
+
                   // Tombol Upload Foto
                   ElevatedButton(
                     onPressed: _pickImage,
@@ -269,7 +264,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                   ),
                   SizedBox(height: 36),
-              
+
                   // Tombol Register
                   SizedBox(
                     height: 35,
@@ -304,8 +299,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
         ),
-        ]
-      ),
+      ]),
     );
   }
 }

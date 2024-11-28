@@ -30,19 +30,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_sign_in: ^5.0.0
+  google_sign_in: ^5.4.0
   image: ^3.0.1 # Add the image package (latest stable version)
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
-  image_picker: ^0.8.4+10
-  http: ^0.13.4 #untuk akses API akses ke database
+  image_picker: ^0.8.6
+  http: ^0.13.6 #untuk akses API akses ke database
   shared_preferences: ^2.2.3
   intl: ^0.18.1 #untuk format angka
-  path_provider: ^2.0.9
-  image_picker_web: ^4.0.0
-  get: ^4.6.6
+  path_provider: ^2.0.11
 
 
 dev_dependencies:
