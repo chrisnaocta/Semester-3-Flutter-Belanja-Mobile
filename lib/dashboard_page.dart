@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart'; // Impor intl untuk memformat angka
 import 'login.dart'; // Impor halaman login
 import 'productdetailpage.dart'; // Impor halaman ProductDetailPage
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -162,7 +163,6 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
