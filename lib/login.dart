@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
     final String password = _passwordController.text;
 
     // URL endpoint API login
-    final String url = 'http://localhost/latlogin_flutter/login.php';
+    const String url = 'http://10.0.2.2/latlogin_flutter/login.php';
 
     try {
       final response = await http.post(
@@ -183,6 +183,27 @@ class _LoginPageState extends State<LoginPage> {
                       Container(
                         width: 120,
                         height: 35,
+                        child:
+                          ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 14, 14, 14),
+                            foregroundColor: Colors.white,
+                            elevation: 3,
+                          ),
+                          onPressed: _login,
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      Container(
+                        width: 120,
+                        height: 35,
                         child: 
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -205,28 +226,6 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
-                      ),
-                      SizedBox(width: 16),
-                      Container(
-                        width: 120,
-                        height: 35,
-                        child:
-                          ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 14, 14, 14),
-                            foregroundColor: Colors.white,
-                            elevation: 3,
-                          ),
-                          onPressed: _login,
-                          child: Text(
-                            'Login',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 0.5,
-                            ),
-                          ),
-                        ),
-                         
                       ),
                     ],
                   ),
