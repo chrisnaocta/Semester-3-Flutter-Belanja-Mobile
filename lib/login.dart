@@ -82,10 +82,10 @@ class _LoginPageState extends State<LoginPage> {
                   Colors.white,
                   Colors.white,
                   const Color.fromARGB(255, 255, 72, 40),
-              ],
-              stops: [0.15, 0.15, 0.15, 0.90, 0.90],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+                ],
+                stops: [0.15, 0.15, 0.15, 0.90, 0.90],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
             ),
           ),
@@ -172,7 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         'Lupa Password?',
                         style: TextStyle(
-                            color: const Color.fromARGB(230, 0,0,0)),
+                            color: const Color.fromARGB(230, 0, 0, 0)),
                       ),
                     ),
                   ),
@@ -185,35 +185,34 @@ class _LoginPageState extends State<LoginPage> {
                       Container(
                         width: 120,
                         height: 35,
-                        child: 
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromARGB(255, 252, 252, 252),
-                              foregroundColor: Color.fromARGB(255, 14, 14, 14),
-                              elevation: 3,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RegisterPage()),
-                              );
-                            },
-                            child: Text(
-                              'Register',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0.5,
-                              ),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromARGB(255, 252, 252, 252),
+                            foregroundColor: Color.fromARGB(255, 14, 14, 14),
+                            elevation: 3,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterPage()),
+                            );
+                          },
+                          child: Text(
+                            'Register',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.5,
                             ),
                           ),
+                        ),
                       ),
                       SizedBox(width: 16),
                       Container(
                         width: 120,
                         height: 35,
-                        child:
-                          ElevatedButton(
+                        child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 14, 14, 14),
                             foregroundColor: Colors.white,
@@ -228,7 +227,6 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
-                         
                       ),
                     ],
                   ),
@@ -259,8 +257,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       GestureDetector(
                         onTap: () {},
-                        child: 
-                        CircleAvatar(
+                        child: CircleAvatar(
                           radius: 26,
                           backgroundColor: Color.fromARGB(99, 0, 0, 0),
                           child: CircleAvatar(
@@ -273,8 +270,7 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(width: 20),
                       GestureDetector(
                         onTap: () {},
-                        child: 
-                        CircleAvatar(
+                        child: CircleAvatar(
                           radius: 25,
                           backgroundImage:
                               AssetImage('assets/images/facebook_logo.png'),
@@ -283,13 +279,11 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(width: 20),
                       GestureDetector(
                         onTap: () {},
-                        child: 
-                        CircleAvatar(
+                        child: CircleAvatar(
                           radius: 26,
                           backgroundColor: const Color.fromARGB(99, 0, 0, 0),
                           child: CircleAvatar(
                             radius: 25,
-                            
                             backgroundImage:
                                 AssetImage('assets/images/twitter_logo.png'),
                           ),
