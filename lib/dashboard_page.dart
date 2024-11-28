@@ -162,6 +162,7 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
+        
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

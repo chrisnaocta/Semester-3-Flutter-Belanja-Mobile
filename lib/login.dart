@@ -185,34 +185,8 @@ class _LoginPageState extends State<LoginPage> {
                       Container(
                         width: 120,
                         height: 35,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 252, 252, 252),
-                            foregroundColor: Color.fromARGB(255, 14, 14, 14),
-                            elevation: 3,
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterPage()),
-                            );
-                          },
-                          child: Text(
-                            'Register',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 0.5,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 16),
-                      Container(
-                        width: 120,
-                        height: 35,
-                        child: ElevatedButton(
+                        child:
+                          ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 14, 14, 14),
                             foregroundColor: Colors.white,
@@ -227,6 +201,33 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
+                      ),
+                      SizedBox(width: 16),
+                      Container(
+                        width: 120,
+                        height: 35,
+                        child: 
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color.fromARGB(255, 252, 252, 252),
+                              foregroundColor: Color.fromARGB(255, 14, 14, 14),
+                              elevation: 3,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RegisterPage()),
+                              );
+                            },
+                            child: Text(
+                              'Register',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                          ),
                       ),
                     ],
                   ),
