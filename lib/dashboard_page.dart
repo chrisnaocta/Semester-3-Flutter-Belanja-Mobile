@@ -87,6 +87,30 @@ class _DashboardPageState extends State<DashboardPage> {
     }
   }
 
+  //Function logout
+  Future<void> _logout() async {
+    try {
+      // Hapus data sesi SharedPreferences
+      final SharedPreferences session = await SharedPreferences.getInstance();
+      await session.remove('isLogin');
+      await session.remove('email');
+      print(session.getString(
+          'email')); //debug apakah email akan kosong setelah di remove
+      await session.remove('password');
+
+      // Navigasi kembali ke halaman login
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    } catch (e) {
+      // Tangani error jika terjadi
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Gagal logout: ${e.toString()}')),
+      );
+    }
+  }
+
   // Fungsi untuk memformat harga
   String formatCurrency(String price) {
     final formatter = NumberFormat.currency(locale: 'id', symbol: 'Rp ');
@@ -99,16 +123,7 @@ class _DashboardPageState extends State<DashboardPage> {
       appBar: AppBar(
         title: Text('Dashboard Produk'),
         actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              // Navigasi ke halaman login
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-              );
-            },
-          ),
+          IconButton(icon: Icon(Icons.logout), onPressed: _logout),
         ],
       ),
       drawer: Drawer(
@@ -148,14 +163,7 @@ class _DashboardPageState extends State<DashboardPage> {
               leading: Icon(Icons.logout),
               title: Text('Logout'),
               onTap: () {
-                // Clear session or token data here if necessary
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          LoginPage()), // Adjust `LoginPage` to match your login page widget
-                );
-                // Tambahkan logika untuk logout
+                _logout();
               },
             ),
           ],

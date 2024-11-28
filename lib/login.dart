@@ -17,6 +17,28 @@ class _LoginPageState extends State<LoginPage> {
   bool _obscureText = true; // Untuk menyembunyikan/menampilkan password
   String _message = '';
 
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    try {
+      SharedPreferences session = await SharedPreferences.getInstance();
+      bool isLogin = session.getBool('isLogin') ?? false;
+
+      if (isLogin) {
+        // Jika sudah login, langsung arahkan ke halaman dashboard
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => DashboardPage()));
+      }
+    } catch (e) {
+      // Tangani error jika terjadi
+      print('Error checking login status: $e');
+    }
+  }
+
   Future<void> _login() async {
     final String email = _emailController.text;
     final String password = _passwordController.text;
@@ -36,6 +58,14 @@ class _LoginPageState extends State<LoginPage> {
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body);
         if (jsonResponse['value'] == 1) {
+          final SharedPreferences session =
+              await SharedPreferences.getInstance();
+          // bool isLogin = session.getBool('isLogin') ?? false;
+          await session.setBool('isLogin', true);
+          await session.setString('email', email);
+          await session.setString('password', password);
+          print(session.getString('email'));
+          print(session.getBool('isLogin'));
           // Jika login berhasil
           Navigator.pushReplacement(
             context,
