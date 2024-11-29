@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart'; // Impor intl untuk memformat angka
 import 'login.dart'; // Impor halaman login
 import 'productdetailpage.dart'; // Impor halaman ProductDetailPage
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -52,9 +53,24 @@ class _DashboardPageState extends State<DashboardPage> {
   // Fungsi untuk mengambil profil pengguna
   Future<void> fetchUserProfile() async {
     try {
-      final response = await http.get(
+      final SharedPreferences session = await SharedPreferences.getInstance();
+      String? email = session.getString('email'); // Ambil email dari session
+
+      if (email == null) {
+        setState(() {
+          userName = 'Email tidak tersedia';
+          userEmail = 'Email tidak tersedia';
+          isLoading = false;
+        });
+        return; // Keluar dari fungsi jika email tidak ada
+      }
+      final response = await http.post(
         Uri.parse('http://10.0.2.2/latlogin_flutter/get_users.php'),
-        // Pastikan untuk mengirim cookie atau session jika diperlukan
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $email',
+        },
+        body: json.encode({'email': email}), // Mengirim email dalam body
       );
 
       if (response.statusCode == 200) {
@@ -86,6 +102,30 @@ class _DashboardPageState extends State<DashboardPage> {
     }
   }
 
+  //Function logout
+  Future<void> _logout() async {
+    try {
+      // Hapus data sesi SharedPreferences
+      final SharedPreferences session = await SharedPreferences.getInstance();
+      await session.remove('isLogin');
+      await session.remove('email');
+      print(session.getString(
+          'email')); //debug apakah email akan kosong setelah di remove
+      await session.remove('password');
+
+      // Navigasi kembali ke halaman login
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    } catch (e) {
+      // Tangani error jika terjadi
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Gagal logout: ${e.toString()}')),
+      );
+    }
+  }
+
   // Fungsi untuk memformat harga
   String formatCurrency(String price) {
     final formatter = NumberFormat.currency(locale: 'id', symbol: 'Rp ');
@@ -98,16 +138,7 @@ class _DashboardPageState extends State<DashboardPage> {
       appBar: AppBar(
         title: Text('Dashboard Produk'),
         actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              // Navigasi ke halaman login
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-              );
-            },
-          ),
+          IconButton(icon: Icon(Icons.logout), onPressed: _logout),
         ],
       ),
       drawer: Drawer(
@@ -147,14 +178,7 @@ class _DashboardPageState extends State<DashboardPage> {
               leading: Icon(Icons.logout),
               title: Text('Logout'),
               onTap: () {
-                // Clear session or token data here if necessary
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          LoginPage()), // Adjust `LoginPage` to match your login page widget
-                );
-                // Tambahkan logika untuk logout
+                _logout();
               },
             ),
           ],
@@ -162,7 +186,6 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

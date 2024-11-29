@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dashboard_page.dart'; // Impor halaman dashboard
 import 'register_page.dart'; // Impor halaman register
 import 'forgot_password_page.dart'; // Impor halaman lupa password
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,6 +16,28 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   bool _obscureText = true; // Untuk menyembunyikan/menampilkan password
   String _message = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    try {
+      SharedPreferences session = await SharedPreferences.getInstance();
+      bool isLogin = session.getBool('isLogin') ?? false;
+
+      if (isLogin) {
+        // Jika sudah login, langsung arahkan ke halaman dashboard
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => DashboardPage()));
+      }
+    } catch (e) {
+      // Tangani error jika terjadi
+      print('Error checking login status: $e');
+    }
+  }
 
   Future<void> _login() async {
     final String email = _emailController.text;
@@ -35,6 +58,16 @@ class _LoginPageState extends State<LoginPage> {
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body);
         if (jsonResponse['value'] == 1) {
+          final SharedPreferences session =
+              await SharedPreferences.getInstance();
+          // bool isLogin = session.getBool('isLogin') ?? false;
+          await session.setBool('isLogin', true);
+          await session.setString('email', email);
+          await session.setString('password', password);
+          print(session.getString(
+              'email')); //debug apakah session email tersimpan (string)
+          print(session.getBool(
+              'isLogin')); //debug apakah session isLogin tersimpan (boolean)
           // Jika login berhasil
           Navigator.pushReplacement(
             context,
@@ -82,10 +115,10 @@ class _LoginPageState extends State<LoginPage> {
                   Colors.white,
                   Colors.white,
                   const Color.fromARGB(255, 255, 72, 40),
-              ],
-              stops: [0.15, 0.15, 0.15, 0.90, 0.90],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+                ],
+                stops: [0.15, 0.15, 0.15, 0.90, 0.90],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
             ),
           ),
@@ -172,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         'Lupa Password?',
                         style: TextStyle(
-                            color: const Color.fromARGB(230, 0,0,0)),
+                            color: const Color.fromARGB(230, 0, 0, 0)),
                       ),
                     ),
                   ),
@@ -185,8 +218,7 @@ class _LoginPageState extends State<LoginPage> {
                       Container(
                         width: 120,
                         height: 35,
-                        child:
-                          ElevatedButton(
+                        child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 14, 14, 14),
                             foregroundColor: Colors.white,
@@ -206,28 +238,28 @@ class _LoginPageState extends State<LoginPage> {
                       Container(
                         width: 120,
                         height: 35,
-                        child: 
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromARGB(255, 252, 252, 252),
-                              foregroundColor: Color.fromARGB(255, 14, 14, 14),
-                              elevation: 3,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RegisterPage()),
-                              );
-                            },
-                            child: Text(
-                              'Register',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0.5,
-                              ),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromARGB(255, 252, 252, 252),
+                            foregroundColor: Color.fromARGB(255, 14, 14, 14),
+                            elevation: 3,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterPage()),
+                            );
+                          },
+                          child: Text(
+                            'Register',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0.5,
                             ),
                           ),
+                        ),
                       ),
                     ],
                   ),
@@ -258,8 +290,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       GestureDetector(
                         onTap: () {},
-                        child: 
-                        CircleAvatar(
+                        child: CircleAvatar(
                           radius: 26,
                           backgroundColor: Color.fromARGB(99, 0, 0, 0),
                           child: CircleAvatar(
@@ -272,8 +303,7 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(width: 20),
                       GestureDetector(
                         onTap: () {},
-                        child: 
-                        CircleAvatar(
+                        child: CircleAvatar(
                           radius: 25,
                           backgroundImage:
                               AssetImage('assets/images/facebook_logo.png'),
@@ -282,13 +312,11 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(width: 20),
                       GestureDetector(
                         onTap: () {},
-                        child: 
-                        CircleAvatar(
+                        child: CircleAvatar(
                           radius: 26,
                           backgroundColor: const Color.fromARGB(99, 0, 0, 0),
                           child: CircleAvatar(
                             radius: 25,
-                            
                             backgroundImage:
                                 AssetImage('assets/images/twitter_logo.png'),
                           ),
