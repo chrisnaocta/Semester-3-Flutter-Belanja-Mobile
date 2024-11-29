@@ -22,6 +22,46 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // Hashing password sebelum menyimpan
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
+        // Mengecek apakah email sudah dipakai
+        $stmt = $connect->prepare("SELECT email FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        if (!$stmt->execute()) {
+            $response['value'] = 0;
+            $response['message'] = 'Gagal mencari email: ' . $stmt->error;
+
+            echo json_encode($response);
+            exit(); 
+        }
+        $stmt->bind_result($account);
+        $stmt->fetch();
+        if ($account != null) {
+            $response['value'] = 0;
+            $response['message'] = 'Email yang Anda pilih sudah dipakai';
+
+            echo json_encode($response);
+            exit(); 
+        }
+
+        // Mengecek apakah no telp sudah dipakai
+        $stmt = $connect->prepare("SELECT email FROM users WHERE telepon = ?");
+        $stmt->bind_param("s", $telepon);
+        if (!$stmt->execute()) {
+            $response['value'] = 0;
+            $response['message'] = 'Gagal mencari no telepon: ' . $stmt->error;
+
+            echo json_encode($response);
+            exit(); 
+        }
+        $stmt->bind_result($account);
+        $stmt->fetch();
+        if ($account) {
+            $response['value'] = 0;
+            $response['message'] = 'No. telepon yang Anda pilih sudah dipakai';
+
+            echo json_encode($response);
+            exit(); 
+        }
+
         // Menggunakan prepared statement untuk menghindari SQL injection
         // Menambahkan field 'createdDate' dengan nilai default dari fungsi NOW() MySQL
         $stmt = $connect->prepare("INSERT INTO users (email, password, nama, alamat, telepon, foto, createdDate) VALUES (?, ?, ?, ?, ?, ?, NOW())");
@@ -85,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     } else {
         // Jika ada field yang kosong
         $response['value'] = 0;
-        $response['message'] = "Permintaan tidak valid";
+        $response['message'] = "One or more fields are empty";
     }
 
      // Always return a JSON response
