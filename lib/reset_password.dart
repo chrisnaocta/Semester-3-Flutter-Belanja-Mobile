@@ -1,31 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:latlogin/reset_password.dart';
 import 'dart:convert';
+import 'login.dart';
 
-class ForgotPasswordPage extends StatefulWidget {
+class ResetPasswordPage extends StatefulWidget {
+  final String email;
+
+  const ResetPasswordPage({Key? key, required String this.email}) : super();
+
+  
   @override
-  _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
-}
+  State<ResetPasswordPage> createState() => _ResetPasswordPageState();}
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _teleponController = TextEditingController();
+class _ResetPasswordPageState extends State<ResetPasswordPage> {
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmController = TextEditingController();
+  bool _obscureText = true; // Untuk menyembunyikan/menampilkan password
   String _message = '';
 
   Future<void> _resetPassword() async {
-
-    final email = _emailController.text;
-    final telepon = _teleponController.text;
+    final email = widget.email;
+    final password = _passwordController.text;
+    final confirm = _confirmController.text;
 
     try {
-      var uri = Uri.http('10.0.2.2', '/latlogin_flutter/forgot_password.php');
+      var uri = Uri.http('10.0.2.2', '/latlogin_flutter/reset_password.php');
 
       var request = http.MultipartRequest('POST', uri);
 
       // Menambahkan field ke request
       request.fields['email'] = email;
-      request.fields['telepon'] = telepon;
+      request.fields['password'] = password;
+      request.fields['confirm'] = confirm;
 
       // Send the request
       var response = await request.send();
@@ -37,7 +43,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           if (mounted) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => ResetPasswordPage(email: email)),
+              MaterialPageRoute(builder: (context) => LoginPage()),
             );
           }
         } else {
@@ -66,9 +72,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Forgot Password'),
+        title: Text('Reset Password'),
         backgroundColor: const Color.fromARGB(255, 26, 26, 26),
         foregroundColor: const Color.fromARGB(255, 255, 255, 255),
+        automaticallyImplyLeading: false,
         ),
       body: Stack(
         children: [
@@ -96,7 +103,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   SizedBox(
                     width: 340,
                     child: Text(
-                      'Masukan email dan nomor telepon Anda untuk reset password',
+                      'Password',
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -109,12 +116,23 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               
                   // TextField email dengan desain kapsul dan ikon email
                   SizedBox(
-                    width: 340, // Ukuran lebar menyesuaikan layar
+                    width: 344, // Ukuran lebar menyesuaikan layar
                     child: TextField(
-                      controller: _emailController,
+                      controller: _passwordController,
                       decoration: InputDecoration(
-                        labelText: 'Masukkan Email',
-                        prefixIcon: Icon(Icons.email),
+                        labelText: 'Enter new password',
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -128,12 +146,36 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   SizedBox(height: 20),
                   // TextField telepon dengan desain kapsul dan ikon email
                   SizedBox(
-                    width: 340, // Ukuran lebar menyesuaikan layar
+                    width: 344,
+                    child: Text(
+                      'Confirm Password',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.black, // Teks berwarna putih
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  SizedBox(
+                    width: 340, 
                     child: TextField(
-                      controller: _teleponController,
+                      controller: _confirmController,
                       decoration: InputDecoration(
-                        labelText: 'Masukkan Telepon',
-                        prefixIcon: Icon(Icons.phone),
+                        labelText: 'Re-enter new password',
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -144,6 +186,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 24,),
+                  SizedBox(
+                    width: 340,
+                    child: Text(
+                      "You will be sent back to the login screen after resetting your password",
+                      textAlign: TextAlign.center,),
+                    ),
                   SizedBox(height: 36),
               
                   // Tombol Reset Password
@@ -162,7 +211,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         textStyle: TextStyle(fontSize: 16),
                       ),
                       child: Text(
-                        'Next',
+                        'Reset Password',
                         style: TextStyle(
                           letterSpacing: 0.5,
                         ),

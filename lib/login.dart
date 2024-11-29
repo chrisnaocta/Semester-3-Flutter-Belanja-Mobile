@@ -141,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   // TextField email dengan desain kapsul dan ikon email
                   SizedBox(
-                    width: 300,
+                    width: 320,
                     child: TextField(
                       controller: _emailController,
                       decoration: InputDecoration(
@@ -160,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   // TextField password dengan ikon mata untuk menampilkan/menyembunyikan password
                   SizedBox(
-                    width: 300,
+                    width: 320,
                     child: TextField(
                       controller: _passwordController,
                       obscureText: _obscureText,
@@ -217,7 +217,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Container(
                         width: 120,
-                        height: 35,
+                        height: 40,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 14, 14, 14),
@@ -228,6 +228,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             'Login',
                             style: TextStyle(
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 0.5,
                             ),
@@ -237,12 +238,12 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(width: 16),
                       Container(
                         width: 120,
-                        height: 35,
+                        height: 40,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
                                 const Color.fromARGB(255, 252, 252, 252),
-                            foregroundColor: Color.fromARGB(255, 14, 14, 14),
+                            foregroundColor: Color.fromARGB(255, 26, 26, 26),
                             elevation: 3,
                           ),
                           onPressed: () {
@@ -255,6 +256,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             'Register',
                             style: TextStyle(
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 0.5,
                             ),

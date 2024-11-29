@@ -38,13 +38,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   // Fungsi untuk melakukan registras
   Future<void> _register() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
 
     final email = _emailController.text;
     final password = _passwordController.text;
@@ -53,8 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final telepon = _teleponController.text;
 
     try {
-      var uri = Uri.parse("http://10.0.2.2/latlogin_flutter/register.php");
-
+      var uri = Uri.http('10.0.2.2', '/latlogin_flutter/register.php');
       var request = http.MultipartRequest('POST', uri);
 
       // Menambahkan field ke request
@@ -144,7 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 children: [
                   SizedBox(
-                    width: 500,
+                    width: 480,
                     child: TextField(
                       controller: _emailController,
                       decoration: InputDecoration(
@@ -160,7 +152,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   SizedBox(height: 16),
                   SizedBox(
-                    width: 500,
+                    width: 480,
                     child: TextField(
                       controller: _passwordController,
                       decoration: InputDecoration(
@@ -177,7 +169,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   SizedBox(height: 16),
                   SizedBox(
-                    width: 500,
+                    width: 480,
                     child: TextField(
                       controller: _namaController,
                       decoration: InputDecoration(
@@ -193,7 +185,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   SizedBox(height: 16),
                   SizedBox(
-                    width: 500,
+                    width: 480,
                     child: TextField(
                       controller: _alamatController,
                       decoration: InputDecoration(
@@ -211,7 +203,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   SizedBox(height: 16),
                   SizedBox(
-                    width: 500,
+                    width: 480,
                     child: TextField(
                       controller: _teleponController,
                       decoration: InputDecoration(
