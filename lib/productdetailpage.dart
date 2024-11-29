@@ -36,11 +36,9 @@ class ProductDetailPage extends StatelessWidget {
       final response = await http.post(
         Uri.parse('http://10.0.2.2/latlogin_flutter/penjualan.php'),
         body: {
-          'nama_produk': productName,
-          'harga_produk':
-              cleanedPrice, // Menggunakan harga yang sudah dibersihkan
           'id_produk': productId,
-          'quantity': '1', // Kuantitas pembelian bisa diatur di sini
+          'harga_produk': cleanedPrice,
+          'quantity': '1',
         },
       );
 
@@ -50,6 +48,9 @@ class ProductDetailPage extends StatelessWidget {
 
       // Cek apakah respons dari server berhasil
       if (response.statusCode == 200) {
+        print(productName);
+        print(cleanedPrice);
+        print(productId);
         var responseData = json.decode(response.body);
         if (responseData['value'] == 1) {
           // Tampilkan pesan sukses jika pembelian berhasil
