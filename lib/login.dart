@@ -188,9 +188,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 3,
-                  ),
                   // Link Lupa Password di bawah isian Password
                   Align(
                     alignment: Alignment.center,

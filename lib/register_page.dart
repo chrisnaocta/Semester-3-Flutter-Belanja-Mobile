@@ -103,7 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Register'),
-        backgroundColor: const Color.fromARGB(255, 14, 14, 14),
+        backgroundColor: const Color.fromARGB(255, 26, 26, 26),
         foregroundColor: const Color.fromARGB(255, 255, 255, 255),
         ),
       body: Stack(
@@ -135,6 +135,47 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Center(
               child: Column(
                 children: [
+                  SizedBox(height: 8),
+                  // Foto dalam bentuk lingkaran
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Color.fromARGB(255, 220, 220, 220),
+                    backgroundImage:
+                        _imageFile != null ? FileImage(_imageFile!) : null,
+                    child: _imageFile == null
+                        ? Icon(Icons.person, size: 50)
+                        : null, // Tampilkan icon person jika belum ada foto
+                  ),
+                  SizedBox(height: 4),
+
+                  // Hanya menampilkan nama file
+                  if (_imageFile != null)
+                    Text(
+                      'Nama file: ${_namaController.text.split(" ")[0]}.jpg',
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  SizedBox(height: 8),
+
+                  // Tombol Upload Foto
+                  SizedBox(
+                    height: 36,
+                    child: ElevatedButton(
+                      onPressed: _pickImage,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 252, 252, 252),
+                        foregroundColor: Color.fromARGB(255, 39, 39, 39),
+                        elevation: 2,
+                      ),
+                      child: Text(
+                          'Upload Foto (Opsional)',
+                          style: TextStyle(
+                            fontSize: 16,
+                            letterSpacing: 0,
+                          ),
+                        ),
+                    ),
+                  ),
+                  SizedBox(height: 24,),
                   SizedBox(
                     width: 480,
                     child: TextField(
@@ -218,67 +259,35 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   SizedBox(height: 18),
-              
-                  // Foto dalam bentuk lingkaran
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Color.fromARGB(255, 220, 220, 220),
-                    backgroundImage:
-                        _imageFile != null ? FileImage(_imageFile!) : null,
-                    child: _imageFile == null
-                        ? Icon(Icons.person, size: 50)
-                        : null, // Tampilkan icon person jika belum ada foto
-                  ),
-                  SizedBox(height: 10),
-
-                  // Hanya menampilkan nama file
-                  if (_imageFile != null)
-                    Text(
-                      'Nama file: ${_namaController.text.split(" ")[0]}.jpg',
-                      style: TextStyle(fontSize: 14),
-                    ),
-                  SizedBox(height: 5),
-
-                  // Tombol Upload Foto
-                  ElevatedButton(
-                    onPressed: _pickImage,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 252, 252, 252),
-                      foregroundColor: Color.fromARGB(255, 14, 14, 14),
-                      elevation: 3,
-                    ),
+                  SizedBox(
+                    width: 340,
                     child: Text(
-                        'Upload Foto (Opsional)',
-                        style: TextStyle(
-                          fontSize: 14,
-                          letterSpacing: 0.5,
-                        ),
-                        ),
-                  ),
-                  SizedBox(height: 36),
-
+                      "You will be sent back to the login screen after registering",
+                      textAlign: TextAlign.center,),
+                    ),
+                  SizedBox(height: 24,),
                   // Tombol Register
                   SizedBox(
-                    height: 35,
-                    width: 120,
+                    height: 48,
+                    width: 160,
                     child: ElevatedButton(
                       onPressed: _register,
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),
-                        backgroundColor: Color.fromARGB(255, 14, 14, 14),
+                        backgroundColor: const Color.fromARGB(255, 26, 26, 26),
                         foregroundColor: Colors.white,
                         elevation: 3,
-                        textStyle: TextStyle(fontSize: 15),
+                        textStyle: TextStyle(fontSize: 20),
                       ),
                       child: Text(
                         'Register',
                         style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.5,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0,
                         ),
-                        ),
+                      ),
                     ),
                   ),
                   SizedBox(height: 16),

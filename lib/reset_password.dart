@@ -119,6 +119,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     width: 344, // Ukuran lebar menyesuaikan layar
                     child: TextField(
                       controller: _passwordController,
+                      obscureText: _obscureText,
                       decoration: InputDecoration(
                         labelText: 'Enter new password',
                         suffixIcon: IconButton(
@@ -162,6 +163,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     width: 340, 
                     child: TextField(
                       controller: _confirmController,
+                      obscureText: _obscureText,
                       decoration: InputDecoration(
                         labelText: 'Re-enter new password',
                         suffixIcon: IconButton(
