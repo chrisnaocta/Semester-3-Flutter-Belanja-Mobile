@@ -38,7 +38,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   // Fungsi untuk melakukan registras
   Future<void> _register() async {
-
     final email = _emailController.text;
     final password = _passwordController.text;
     final nama = _namaController.text;
@@ -72,6 +71,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
         if (jsonData['value'] == 1) {
           if (mounted) {
+            // Tampilkan pesan sukses jika registrasi berhasil
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Registrasi berhasil!'),
+                backgroundColor: Colors.green,
+              ),
+            );
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => LoginPage()),
@@ -105,24 +111,23 @@ class _RegisterPageState extends State<RegisterPage> {
         title: Text('Register'),
         backgroundColor: const Color.fromARGB(255, 26, 26, 26),
         foregroundColor: const Color.fromARGB(255, 255, 255, 255),
-        ),
-      body: Stack(
-        children: [
-          // Gambar latar belakang
-          Container(
-            width: screenWidth,
-            height: screenHeight,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Colors.white,
+      ),
+      body: Stack(children: [
+        // Gambar latar belakang
+        Container(
+          width: screenWidth,
+          height: screenHeight,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.white,
               ],
               stops: [1],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              ),
             ),
           ),
+        ),
 
         Container(
           width: screenWidth,
@@ -162,20 +167,23 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: ElevatedButton(
                       onPressed: _pickImage,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 252, 252, 252),
+                        backgroundColor:
+                            const Color.fromARGB(255, 252, 252, 252),
                         foregroundColor: Color.fromARGB(255, 39, 39, 39),
                         elevation: 2,
                       ),
                       child: Text(
-                          'Upload Foto (Opsional)',
-                          style: TextStyle(
-                            fontSize: 16,
-                            letterSpacing: 0,
-                          ),
+                        'Upload Foto (Opsional)',
+                        style: TextStyle(
+                          fontSize: 16,
+                          letterSpacing: 0,
                         ),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 24,),
+                  SizedBox(
+                    height: 24,
+                  ),
                   SizedBox(
                     width: 480,
                     child: TextField(
@@ -263,9 +271,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     width: 340,
                     child: Text(
                       "You will be sent back to the login screen after registering",
-                      textAlign: TextAlign.center,),
+                      textAlign: TextAlign.center,
                     ),
-                  SizedBox(height: 24,),
+                  ),
+                  SizedBox(
+                    height: 24,
+                  ),
                   // Tombol Register
                   SizedBox(
                     height: 48,
