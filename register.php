@@ -7,6 +7,30 @@ header("Access-Control-Allow-Headers: Content-Type");
 // Menghubungkan ke database
 require "connect.php";
 
+function generateCustomId($connect) {    
+    // Prefix ID
+    $prefix = 'USR-';
+    
+    // Cari nomor urut terakhir hari ini
+    $stmt = $connect->prepare("SELECT MAX(SUBSTRING(id, -4)) as max_urut 
+                                FROM users 
+                                WHERE id LIKE ?");
+    $like_pattern = $prefix . '%';
+    $stmt->bind_param("s", $like_pattern);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    
+    // Tentukan nomor urut
+    $urut = $row['max_urut'] ? intval($row['max_urut']) + 1 : 1;
+    
+    // Format nomor urut dengan padding
+    $nomor_urut = sprintf("%04d", $urut);
+    
+    // Gabungkan menjadi ID lengkap
+    return $prefix . $nomor_urut;
+}
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $response = array(); // Inisialisasi array untuk respon
 
@@ -62,16 +86,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             exit(); 
         }
 
+        // Generate custom ID
+        $custom_id = generateCustomId($connect);
+
         // Menggunakan prepared statement untuk menghindari SQL injection
         // Menambahkan field 'createdDate' dengan nilai default dari fungsi NOW() MySQL
-        $stmt = $connect->prepare("INSERT INTO users (email, password, nama, alamat, telepon, foto, createdDate) VALUES (?, ?, ?, ?, ?, ?, NOW())");
-        $stmt->bind_param("ssssss", $email, $hashed_password, $nama, $alamat, $telepon, $fotoFileName); // "s" = string
+        $stmt = $connect->prepare("INSERT INTO users (id, email, password, nama, alamat, telepon, foto, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())");
+        $stmt->bind_param("sssssss", $custom_id,$email, $hashed_password, $nama, $alamat, $telepon, $fotoFileName); // "s" = string
 
          // Menjalankan query
         if ($stmt->execute()) {
-            // Jika penyimpanan berhasil, ambil ID yang baru saja dimasukkan
-            $userId = $stmt->insert_id; // Ambil ID auto increment dari pengguna yang baru ditambahkan
-
             // Handling file upload
             $uploadDir = 'uploads/';
             $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -89,14 +113,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 if (in_array($fileType, $allowedTypes) && $fileSize <= 2 * 1024 * 1024) {
                     // Create the destination path for the file (save with userId as the filename)
                     $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION); // Get the file extension (jpg, png, jpeg)
-                    $fotoFileName = $userId . '.' . $fileExtension; // Format nama file <id_user>.<ext>
+                    $fotoFileName = $custom_id . '.' . $fileExtension; // Format nama file <id_user>.<ext>
                     $uploadPath = $uploadDir . $fotoFileName;
 
                     // Pindahkan file ke folder uploads
                     if (move_uploaded_file($fileTmp, $uploadPath)) {
                         // Update database dengan nama file foto
                         $stmt = $connect->prepare("UPDATE users SET foto = ? WHERE id = ?");
-                        $stmt->bind_param("si", $fotoFileName, $userId);
+                        $stmt->bind_param("ss", $fotoFileName, $custom_id);
                         $stmt->execute();
                     } else {
                         $response['value'] = 0;
