@@ -17,6 +17,7 @@ class _DashboardPageState extends State<DashboardPage> {
   String errorMessage = ''; // Menyimpan pesan error jika ada
   String userName = 'Loading...';
   String userEmail = 'Loading...';
+  String userProfilePhoto = 'Loading...';
 
   // Fungsi untuk mengambil data produk dari API
   Future<void> fetchProducts() async {
@@ -80,6 +81,8 @@ class _DashboardPageState extends State<DashboardPage> {
           setState(() {
             userName = responseData['data']['nama'] ?? 'Nama Tidak Tersedia';
             userEmail = responseData['data']['email'] ?? 'Email Tidak Tersedia';
+            userProfilePhoto =
+                responseData['data']['foto'] ?? 'Foto Tidak Tersedia';
             isLoading = false;
           });
         } else {
@@ -149,8 +152,10 @@ class _DashboardPageState extends State<DashboardPage> {
               accountEmail: Text(userEmail), // Email pengguna
               currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage(
-                  'https://via.placeholder.com/150', // Ganti dengan URL foto pengguna
+                  'http://10.0.2.2/latlogin_flutter/uploads/$userProfilePhoto', // Ganti dengan URL foto pengguna
                 ),
+                onBackgroundImageError: (_, __) =>
+                    Icon(Icons.person), // Tampilkan icon default jika gagal
               ),
             ),
             ListTile(
