@@ -34,7 +34,7 @@ class ProductDetailPage extends StatelessWidget {
 
       // Mengirim POST request ke server untuk menyimpan data pembelian
       final response = await http.post(
-        Uri.parse('http://10.0.2.2/latlogin_flutter/penjualan.php'),
+        Uri.parse('http://10.0.2.2/quickshop_flutter/penjualan.php'),
         body: {
           'id_produk': productId,
           'harga_produk': cleanedPrice,

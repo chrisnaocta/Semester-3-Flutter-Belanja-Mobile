@@ -24,7 +24,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     final confirm = _confirmController.text;
 
     try {
-      var uri = Uri.http('10.0.2.2', '/latlogin_flutter/reset_password.php');
+      var uri = Uri.http('10.0.2.2', '/quickshop_flutter/reset_password.php');
 
       var request = http.MultipartRequest('POST', uri);
 

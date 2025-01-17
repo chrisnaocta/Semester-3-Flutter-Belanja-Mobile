@@ -45,7 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final telepon = _teleponController.text;
 
     try {
-      var uri = Uri.http('10.0.2.2', '/latlogin_flutter/register.php');
+      var uri = Uri.http('10.0.2.2', '/quickshop_flutter/register.php');
       var request = http.MultipartRequest('POST', uri);
 
       // Menambahkan field ke request

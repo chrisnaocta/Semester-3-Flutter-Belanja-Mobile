@@ -24,7 +24,7 @@ class _DashboardPageState extends State<DashboardPage> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://10.0.2.2/latlogin_flutter/get_products.php'), // Ganti dengan URL API Anda
+            'http://10.0.2.2/quickshop_flutter/get_products.php'), // Ganti dengan URL API Anda
       );
 
       if (response.statusCode == 200) {
@@ -66,7 +66,7 @@ class _DashboardPageState extends State<DashboardPage> {
         return; // Keluar dari fungsi jika email tidak ada
       }
       final response = await http.post(
-        Uri.parse('http://10.0.2.2/latlogin_flutter/get_users.php'),
+        Uri.parse('http://10.0.2.2/quickshop_flutter/get_users.php'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $email',
@@ -152,7 +152,7 @@ class _DashboardPageState extends State<DashboardPage> {
               accountEmail: Text(userEmail), // Email pengguna
               currentAccountPicture: CircleAvatar(
                 backgroundImage: NetworkImage(
-                  'http://10.0.2.2/latlogin_flutter/uploads/$userProfilePhoto', // Ganti dengan URL foto pengguna
+                  'http://10.0.2.2/quickshop_flutter/uploads/$userProfilePhoto', // Ganti dengan URL foto pengguna
                 ),
                 onBackgroundImageError: (_, __) =>
                     Icon(Icons.person), // Tampilkan icon default jika gagal

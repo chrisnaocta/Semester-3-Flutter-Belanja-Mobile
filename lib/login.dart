@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
     final String password = _passwordController.text;
 
     // URL endpoint API login
-    final String url = 'http://10.0.2.2/latlogin_flutter/login.php';
+    final String url = 'http://10.0.2.2/quickshop_flutter/login.php';
 
     try {
       final response = await http.post(

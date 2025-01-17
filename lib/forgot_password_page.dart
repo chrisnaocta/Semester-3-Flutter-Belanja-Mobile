@@ -19,7 +19,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     final telepon = _teleponController.text;
 
     try {
-      var uri = Uri.http('10.0.2.2', '/latlogin_flutter/forgot_password.php');
+      var uri = Uri.http('10.0.2.2', '/quickshop_flutter/forgot_password.php');
 
       var request = http.MultipartRequest('POST', uri);
 
